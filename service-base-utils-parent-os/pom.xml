@@ -22,12 +22,12 @@
 	<!-- -->
 	
 	<modules>
-        <module>../common-multipart-utils-os</module>       
-        <module>../service-encryption-os</module>
-        <module>../service-model-os</module>
-        <module>../service-swagger-fragment-os</module>
-        <module>../service-base-os</module>
-    </modules>
+		<module>../common-multipart-utils-os</module>
+		<module>../service-encryption-os</module>
+		<module>../service-model-os</module>
+		<module>../service-swagger-fragment-os</module>
+		<module>../service-base-os</module>
+	</modules>
 
 	<properties>
 		<base-version>0.0.1</base-version>
@@ -85,11 +85,11 @@
 	</organization> -->
 
 	<licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
 
 	<build>
 		<defaultGoal>package</defaultGoal>
@@ -121,30 +121,30 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>flatten-maven-plugin</artifactId>
-                    <version>1.2.2</version>
-                    <configuration>
-                        <updatePomFile>true</updatePomFile>
-                        <flattenMode>ossrh</flattenMode>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>flatten</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>flatten</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>flatten.clean</id>
-                            <phase>clean</phase>
-                            <goals>
-                                <goal>clean</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>flatten-maven-plugin</artifactId>
+					<version>1.2.2</version>
+					<configuration>
+						<updatePomFile>true</updatePomFile>
+						<flattenMode>ossrh</flattenMode>
+					</configuration>
+					<executions>
+						<execution>
+							<id>flatten</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>flatten</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>flatten.clean</id>
+							<phase>clean</phase>
+							<goals>
+								<goal>clean</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
@@ -345,9 +345,9 @@
 		</pluginManagement>
 		<plugins>
 			<plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-            </plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<executions>
@@ -529,11 +529,11 @@
 
 	<profiles>
 		<profile>
-            <id>release</id>
-            <properties>
-                <revision>${base-version}</revision>
-            </properties>
-        </profile>
+			<id>release</id>
+			<properties>
+				<revision>${base-version}</revision>
+			</properties>
+		</profile>
 		<!-- Define 'bldOS.unix' property if build OS is Linux. and 'bldOS.win' 
 			property if build OS is Windows. -->
 		<!-- These properties are used as condition to enable/disable an ANT task -->

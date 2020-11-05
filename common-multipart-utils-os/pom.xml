@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>com.ibm.watson.health.services</groupId>
 		<artifactId>service-base-utils-parent-os</artifactId>
-        <version>${revision}</version>
+		<version>${revision}</version>
 		<relativePath>../service-base-utils-parent-os/pom.xml</relativePath>
 	</parent>
 	<artifactId>common-multipart-utils-os</artifactId>
