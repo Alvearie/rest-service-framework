@@ -7,21 +7,26 @@
 package com.ibm.watson.health.services;
 
 import java.security.spec.KeySpec;
+import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESedeKeySpec;
-
-import java.util.Base64;
+import javax.crypto.spec.SecretKeySpec;
 
 public class Encryption {
 
 	// NOTE: CHANGING THIS KEY INVALIDATES ANY VALUES STORED IN ENCRYPTED FORM
 	// THAT USED THE PREVIOUS VALUE !!!
 	// must be minimum of 24 characters long given the key spec that is being used
-	private static final String DEFAULT_KEY_MATERIAL = System.getenv(Encryption.class.getPackage().getName()+"_ENCRYPT_DEFAULT_KEY_MATERIAL");
-	private static final String APPROVED_CIPHER_TRANSFORMATION = "DESede";
+	private static final String KEY_MATERIAL_ENV_VAR = Encryption.class.getPackage().getName()+"_ENCRYPT_DEFAULT_KEY_MATERIAL";
+	private static final String DEFAULT_KEY_MATERIAL = System.getenv(KEY_MATERIAL_ENV_VAR);
+	private static String APPROVED_CIPHER_TRANSFORMATION = "AES";  //Can provide DESede in env var to override
+	
+	static {
+		String cipher = System.getenv(Encryption.class.getPackage().getName()+"_APPROVED_CIPHER_TRANSFORMATION");
+		APPROVED_CIPHER_TRANSFORMATION = cipher != null ? cipher : APPROVED_CIPHER_TRANSFORMATION;
+	}
 
 	public String encrypt(String unencryptedString) throws Exception {
 		return encrypt(unencryptedString, DEFAULT_KEY_MATERIAL);
@@ -29,7 +34,7 @@ public class Encryption {
 
 	public String encrypt(String unencryptedString, String keyMaterial) throws Exception {
 		if(keyMaterial == null || keyMaterial.isEmpty() || keyMaterial.length() < 24) {
-			throw new Exception("Environmental Variable REST_SERVICE_FRAMEWORK_DEFAULT_KEY_MATERIAL must be provided and also must be at least 24 characters.");
+			throw new Exception("Environmental Variable "+KEY_MATERIAL_ENV_VAR+" must be provided and also must be at least 24 characters.");
 		}
 		if (keyMaterial.length() < 24) {
 			StringBuffer sb = new StringBuffer(keyMaterial);
@@ -39,7 +44,7 @@ public class Encryption {
 		}
 
 		// Setup key
-		KeySpec keySpec = new DESedeKeySpec(keyMaterial.getBytes());
+		KeySpec keySpec = new SecretKeySpec(keyMaterial.getBytes(), "APPROVED_CIPHER_TRANSFORMATION");
 		SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(APPROVED_CIPHER_TRANSFORMATION);
 		SecretKey secretKey = keyFactory.generateSecret(keySpec);
 
@@ -62,14 +67,14 @@ public class Encryption {
 
 	public String decrypt(String encodedEncryptedString, String keyMaterial) throws Exception {
 		if(keyMaterial == null || keyMaterial.isEmpty() || keyMaterial.length() < 24) {
-			throw new Exception("Environmental Variable REST_SERVICE_FRAMEWORK_DEFAULT_KEY_MATERIAL must be provided and also must be at least 24 characters.");
+			throw new Exception("Environmental Variable "+KEY_MATERIAL_ENV_VAR+" must be provided and also must be at least 24 characters.");
 		}
 		// Decode string
 		Base64.Decoder decoder = Base64.getDecoder();
 		byte[] encryptedString = decoder.decode(encodedEncryptedString);
 
 		// Setup key
-		KeySpec keySpec = new DESedeKeySpec(keyMaterial.getBytes());
+		KeySpec keySpec = new SecretKeySpec(keyMaterial.getBytes(), "APPROVED_CIPHER_TRANSFORMATION");
 		SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(APPROVED_CIPHER_TRANSFORMATION);
 
 		// Setup cipher
