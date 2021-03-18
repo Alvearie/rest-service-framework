@@ -262,6 +262,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- AppScan issue with 2.3 version pulled in by org.owasp.esapi -->
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>xmlgraphics-commons</artifactId>
+			<version>2.6</version>
+		</dependency>
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
