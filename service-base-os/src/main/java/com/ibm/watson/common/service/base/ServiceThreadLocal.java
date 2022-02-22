@@ -215,8 +215,8 @@ public class ServiceThreadLocal {
 			ServiceThreadLocal.setThreadDebug(null);
 			// TODO Why is parse exception here?
 			} catch (ParseException e) {
-			ServiceError se = new ServiceError().setCode(Status.INTERNAL_SERVER_ERROR.getStatusCode()).setMessage(Status.INTERNAL_SERVER_ERROR.getReasonPhrase()).setDescription("Exception while processing thread-local cleanup: " + e.toString());
-			return Response.status(se.getCode()).entity(se).build();
+			  ServiceError se = new ServiceError().setCode(Status.INTERNAL_SERVER_ERROR.getStatusCode()).setMessage(Status.INTERNAL_SERVER_ERROR.getReasonPhrase()).setDescription("Exception while processing thread-local cleanup: " + e.toString());
+			  return Response.status(se.getCode()).entity(se).build();
 		}
 
 		return null;
